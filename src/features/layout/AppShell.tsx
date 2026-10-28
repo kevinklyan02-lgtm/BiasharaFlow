@@ -52,6 +52,9 @@ export function AppShell() {
       )}
 
       <TopBar onMenu={() => setOpen(true)} />
+      <div className="bg-amber-50 px-4 py-1.5 text-center text-xs text-amber-900">
+        Simulated data: no real merchant data, credentials or money are used.
+      </div>
       <main className="mx-auto max-w-6xl p-4 sm:p-6">
         <Outlet />
       </main>
