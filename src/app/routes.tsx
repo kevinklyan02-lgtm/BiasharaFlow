@@ -7,6 +7,7 @@ import { OfferReviewPage } from '@/features/offers/OfferReviewPage';
 import { OffersPage } from '@/features/offers/OffersPage';
 import { RepaymentsPage } from '@/features/repayments/RepaymentsPage';
 import { ReportProblemPage } from '@/features/disputes/ReportProblemPage';
+import { BacktestPage } from '@/features/backtest/BacktestPage';
 import { LimitPage } from '@/features/limit/LimitPage';
 
 export function AppRoutes() {
@@ -20,7 +21,7 @@ export function AppRoutes() {
         <Route path="offers/:offerId" element={<OfferReviewPage />} />
         <Route path="repayments" element={<RepaymentsPage />} />
         <Route path="problem" element={<ReportProblemPage />} />
-        <Route path="backtest" element={<ComingSoon title="Backtest" phase={7} />} />
+        <Route path="backtest" element={<BacktestPage />} />
         <Route path="ussd" element={<ComingSoon title="USSD Phone" phase={8} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
