@@ -4,6 +4,7 @@ import { Card } from '@/components/ui';
 import { ForecastCard } from '@/features/forecast/ForecastCard';
 import { LimitCard } from '@/features/limit/LimitCard';
 import { RepaymentSummaryCard } from '@/features/repayments/RepaymentSummaryCard';
+import { RecentActivity } from './RecentActivity';
 import { RestockCta } from './RestockCta';
 import { StatCards } from './StatCards';
 
@@ -57,7 +58,10 @@ export function DashboardPage() {
         <Hero />
         <StatCards />
         <ForecastCard />
-        <LimitCard />
+        <div className="grid gap-5 md:grid-cols-2">
+          <LimitCard />
+          <RecentActivity />
+        </div>
       </div>
       <div className="space-y-5">
         <RestockCta />
