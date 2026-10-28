@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Leaf, LifeBuoy } from 'lucide-react';
 import { Button, cx } from '@/components/ui';
+import { DemoReset } from './DemoReset';
 import { DEMO_NAV, MAIN_NAV, type NavItem } from './navItems';
 
 function NavGroup({ items, onNavigate }: { items: NavItem[]; onNavigate?: () => void }) {
@@ -52,6 +53,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
             Demo tools
           </p>
           <NavGroup items={DEMO_NAV} onNavigate={onNavigate} />
+          <DemoReset />
         </div>
       </nav>
 

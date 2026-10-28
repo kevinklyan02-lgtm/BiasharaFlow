@@ -11,7 +11,24 @@ For frontend developers and **backend engineers** connecting the dashboard to th
    VITE_API_BASE_URL=http://localhost:8000
    ```
 3. `npm run dev`. The top bar shows `LIVE` or `MOCK` so nobody confuses them.
-4. Run `npm run test:contract:live` to check the API against the contract tests.
+4. Check the API against the contract tests (see below).
+
+### Contract tests against the real API
+
+`src/api/contract.test.ts` runs the same checks against the mock (always) and the live API (opt-in). Every live response is validated with the Zod schemas, so a mismatch fails with `[contract] METHOD /path: field message`.
+
+```bash
+# read-only checks (safe on any server)
+CONTRACT_BASE_URL=http://localhost:8000 npm run test:contract:live
+
+# also exercise offers, loans, repayments, check-ins, disputes and USSD.
+# This calls POST /demo/reset first, so only use a demo/sandbox server.
+CONTRACT_BASE_URL=http://localhost:8000 CONTRACT_MUTATE=1 npm run test:contract:live
+```
+
+PowerShell: `$env:CONTRACT_BASE_URL='http://localhost:8000'; npm run test:contract:live`.
+
+The mutating run needs `POST /demo/reset` enabled and a trader with a non-zero limit.
 
 ## 2. Where things live
 
