@@ -11,34 +11,50 @@ export const formatPercent = (fraction: number) => `${Math.round(fraction * 1000
 /** Parses "2026-11-01" as a UTC calendar day so the weekday never shifts with the viewer's zone. */
 const toDate = (iso: string) => new Date(iso.length === 10 ? `${iso}T00:00:00Z` : iso);
 
-/** "Sat, 1 Nov" */
+/**
+ * Intl supplies the words and numbers; we supply the punctuation. The separators Intl puts
+ * between parts (for example the comma after the weekday) differ between ICU versions, so the
+ * output would otherwise change from one machine or CI runner to the next.
+ */
+function parts(d: Date, options: Intl.DateTimeFormatOptions): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const p of new Intl.DateTimeFormat('en-GB', options).formatToParts(d)) {
+    if (p.type !== 'literal') out[p.type] = p.value;
+  }
+  return out;
+}
+
+/** "Sun, 1 Nov" */
 export function formatDay(iso: string): string {
-  return toDate(iso).toLocaleDateString('en-GB', {
+  const p = parts(toDate(iso), {
     weekday: 'short',
     day: 'numeric',
     month: 'short',
     timeZone: 'UTC',
   });
+  return `${p.weekday}, ${p.day} ${p.month}`;
 }
 
 /** "1 Nov" */
 export function formatShortDate(iso: string): string {
-  return toDate(iso).toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'short',
-    timeZone: 'UTC',
-  });
+  const p = parts(toDate(iso), { day: 'numeric', month: 'short', timeZone: 'UTC' });
+  return `${p.day} ${p.month}`;
 }
 
-/** "Sat" */
+/** "Sun" */
 export function formatWeekday(iso: string): string {
-  return toDate(iso).toLocaleDateString('en-GB', { weekday: 'short', timeZone: 'UTC' });
+  return parts(toDate(iso), { weekday: 'short', timeZone: 'UTC' }).weekday;
 }
 
 /** "27 Oct 2026, 10:24" in the viewer's local time. */
 export function formatDateTime(iso: string): string {
-  const d = toDate(iso);
-  const date = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-  const time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
-  return `${date}, ${time}`;
+  const p = parts(toDate(iso), {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  });
+  return `${p.day} ${p.month} ${p.year}, ${p.hour}:${p.minute}`;
 }
