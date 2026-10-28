@@ -1,3 +1,4 @@
+import { formatDay } from '@/lib/format';
 import { ApiError } from '../errors';
 import type { ApiClient, Backtest, Insights, Loan } from '../types';
 import { SEED_TRADERS } from './seed';
@@ -169,12 +170,6 @@ export function createMockClient(options: MockOptions = {}): ApiClient {
         .map(([item, reports]) => ({ item, reports }))
         .sort((a, b) => b.reports - a.reports);
       const busiest = byBusiest[0];
-      const day = new Date(`${busiest.date}T00:00:00Z`).toLocaleDateString('en-GB', {
-        weekday: 'long',
-        day: '2-digit',
-        month: 'short',
-        timeZone: 'UTC',
-      });
       return {
         trader_id: id,
         generated_at: now().toISOString(),
@@ -184,7 +179,7 @@ export function createMockClient(options: MockOptions = {}): ApiClient {
         quietest_days: byBusiest.slice(-2).reverse().map(pick),
         stock_alerts: alerts,
         suggestion:
-          `Restock before ${day}, your busiest day next week.` +
+          `Your busiest day next week is ${formatDay(busiest.date)}. Restock before then.` +
           (alerts[0] ? ` ${alerts[0].item} is the item you report running low most often.` : ''),
       };
     },

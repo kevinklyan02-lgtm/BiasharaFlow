@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { newTxnId } from './id';
-import { formatDay, formatKes, formatPercent, formatShortDate, formatWeekday } from './format';
+import {
+  formatDateTime,
+  formatDay,
+  formatKes,
+  formatPercent,
+  formatShortDate,
+  formatWeekday,
+} from './format';
 
 describe('format', () => {
   it('formats whole KES with thousands separators', () => {
@@ -18,6 +25,11 @@ describe('format', () => {
     expect(formatDay('2026-11-01')).toBe('Sun, 1 Nov');
     expect(formatShortDate('2026-11-01')).toBe('1 Nov');
     expect(formatWeekday('2026-11-01')).toBe('Sun');
+  });
+
+  it('keeps a fixed shape whatever the ICU version punctuates', () => {
+    expect(formatDateTime('2026-10-27T10:24:00Z')).toMatch(/^\d{1,2} \w{3} 2026, \d{2}:\d{2}$/);
+    expect(formatDay('2026-11-01')).toMatch(/^\w{3}, \d{1,2} \w{3}$/);
   });
 
   it('generates a unique txn id each call', () => {
