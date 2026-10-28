@@ -16,6 +16,10 @@ Each phase ends with a **gate**: lint, typecheck, unit tests and build all pass,
 | 9     | Demo mode and hardening      | Reset button (403 handled), "Simulated" labels, a11y pass, performance pass, live-mode smoke test checklist | axe checks pass on every screen; manual keyboard and contrast pass; all docs updated                            |
 | 10    | Release                      | Deployed build config, final README, tag `v1.0.0`                                                           | Production build served and walked through end to end                                                           |
 
+## Status
+
+Phases 0 to 10 are complete and tagged `phase-0` to `phase-10`; the release is `v1.0.0`. Outstanding manual checks (real-browser layout at 360px and 1280px, colour contrast, keyboard run-through) and the live-backend contract run are listed in the README under "Known limits".
+
 ## Phase workflow
 
 1. Branch `phase/<n>-<slug>` from `main`.
