@@ -3,6 +3,8 @@ import { AppShell } from '@/features/layout/AppShell';
 import { ComingSoon } from './ComingSoon';
 import { DashboardPage } from '@/features/dashboard/DashboardPage';
 import { ForecastPage } from '@/features/forecast/ForecastPage';
+import { OfferReviewPage } from '@/features/offers/OfferReviewPage';
+import { OffersPage } from '@/features/offers/OffersPage';
 import { LimitPage } from '@/features/limit/LimitPage';
 
 export function AppRoutes() {
@@ -12,7 +14,8 @@ export function AppRoutes() {
         <Route index element={<DashboardPage />} />
         <Route path="forecast" element={<ForecastPage />} />
         <Route path="limit" element={<LimitPage />} />
-        <Route path="offers" element={<ComingSoon title="Offers" phase={4} />} />
+        <Route path="offers" element={<OffersPage />} />
+        <Route path="offers/:offerId" element={<OfferReviewPage />} />
         <Route path="repayments" element={<ComingSoon title="Repayment Progress" phase={5} />} />
         <Route path="problem" element={<ComingSoon title="Report a Problem" phase={6} />} />
         <Route path="backtest" element={<ComingSoon title="Backtest" phase={7} />} />
