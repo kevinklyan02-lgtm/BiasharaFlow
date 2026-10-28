@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { X } from 'lucide-react';
+import { DEMO_NAV, MAIN_NAV } from './navItems';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
 
@@ -8,6 +9,14 @@ import { TopBar } from './TopBar';
 export function AppShell() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+
+  // Keep the tab title in step with the screen (helps screen-reader and tab users).
+  useEffect(() => {
+    const current = [...MAIN_NAV, ...DEMO_NAV].find((n) =>
+      n.end ? pathname === n.to : pathname.startsWith(n.to),
+    );
+    document.title = current ? `${current.label} | BiasharaFlow` : 'BiasharaFlow';
+  }, [pathname]);
 
   // Close the drawer whenever the route changes and on Escape.
   useEffect(() => setOpen(false), [pathname]);
@@ -20,6 +29,12 @@ export function AppShell() {
 
   return (
     <div className="min-h-screen lg:pl-72">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:shadow"
+      >
+        Skip to content
+      </a>
       <aside className="fixed inset-y-0 left-0 hidden w-72 lg:block">
         <Sidebar />
       </aside>
@@ -55,7 +70,7 @@ export function AppShell() {
       <div className="bg-amber-50 px-4 py-1.5 text-center text-xs text-amber-900">
         Simulated data: no real merchant data, credentials or money are used.
       </div>
-      <main className="mx-auto max-w-6xl p-4 sm:p-6">
+      <main id="main" tabIndex={-1} className="mx-auto max-w-6xl p-4 outline-none sm:p-6">
         <Outlet />
       </main>
     </div>

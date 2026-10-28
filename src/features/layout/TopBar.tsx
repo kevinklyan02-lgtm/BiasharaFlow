@@ -2,6 +2,19 @@ import { Menu, Store } from 'lucide-react';
 import { useApi } from '@/api/ApiProvider';
 import { cx } from '@/components/ui';
 import { useTrader } from '@/features/traders/TraderContext';
+import { useHealth } from './hooks';
+
+function HealthDot() {
+  const health = useHealth();
+  const state = health.isPending ? 'checking' : health.isError ? 'offline' : 'online';
+  const tone = { checking: 'bg-slate-300', offline: 'bg-red-500', online: 'bg-brand-500' }[state];
+  return (
+    <span className="flex items-center gap-1.5 text-xs text-slate-600" role="status">
+      <span className={cx('h-2.5 w-2.5 rounded-full', tone)} aria-hidden />
+      <span className="sr-only sm:not-sr-only">API {state}</span>
+    </span>
+  );
+}
 
 function ModeBadge() {
   const { mode } = useApi();
@@ -39,6 +52,7 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
         </h1>
       </div>
 
+      <HealthDot />
       <ModeBadge />
       <label className="flex items-center gap-2 text-sm">
         <span className="sr-only sm:not-sr-only sm:text-slate-500">Trader</span>

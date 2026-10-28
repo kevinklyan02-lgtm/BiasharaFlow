@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ApiProvider } from '@/api/ApiProvider';
 import { api } from '@/api/client';
 import { createQueryClient } from '@/api/queryClient';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { TraderProvider } from '@/features/traders/TraderContext';
 import { AppRoutes } from './routes';
 
@@ -13,9 +14,11 @@ export function App() {
     <ApiProvider client={api}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <TraderProvider>
-            <AppRoutes />
-          </TraderProvider>
+          <ErrorBoundary>
+            <TraderProvider>
+              <AppRoutes />
+            </TraderProvider>
+          </ErrorBoundary>
         </BrowserRouter>
       </QueryClientProvider>
     </ApiProvider>
