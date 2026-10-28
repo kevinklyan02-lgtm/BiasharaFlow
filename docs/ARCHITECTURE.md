@@ -43,8 +43,8 @@ src/
     repayments/  stock/  disputes/  backtest/  ussd/  demo/
       (each: components/, hooks.ts, pages/, *.test.tsx)
   components/     shared UI (Card, Button, Money, Toast, ErrorState, ...)
-  lib/            format.ts (KES, dates), id.ts (txn ids), storage.ts
-  test/           setup, factories, msw-free fixtures
+  lib/            format.ts (KES, dates), id.ts (txn ids), storage.ts, config.ts, catalog.ts
+  test/           setup, render helper (mock client + providers), axe helper
 docs/             ROADMAP, ARCHITECTURE, INTEGRATION, API_CONTRACT, DECISIONS
 ```
 
