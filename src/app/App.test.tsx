@@ -47,11 +47,11 @@ describe('app shell', () => {
     ).toBeInTheDocument();
   });
 
-  it('navigates between placeholder screens', async () => {
+  it('navigates between screens', async () => {
     const user = userEvent.setup();
     renderApp(<AppRoutes />);
     await user.click(await screen.findByRole('link', { name: 'Offers' }));
-    expect(screen.getByRole('heading', { name: 'Offers' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Offers' })).toBeInTheDocument();
   });
 
   it('opens and closes the mobile menu', async () => {
