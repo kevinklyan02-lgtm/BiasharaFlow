@@ -3,6 +3,7 @@
 For frontend developers and **backend engineers** connecting the dashboard to the real API. The contract is SRS v0.2; if reality differs, fix the contract first, then the code (both pairs agree).
 
 ## 1. Switch from mock to live
+
 1. Start the backend (`api/README.md` on the backend branch), default `http://localhost:8000`.
 2. Copy `.env.example` to `.env` and set:
    ```
@@ -13,35 +14,39 @@ For frontend developers and **backend engineers** connecting the dashboard to th
 4. Run `npm run test:contract:live` to check the API against the contract tests.
 
 ## 2. Where things live
-| You want to... | Look at |
-|---|---|
-| See what the UI expects from an endpoint | `src/api/types.ts`, `src/api/schemas.ts` |
-| See how an endpoint is called | `src/api/live.ts` |
-| See how the mock enforces a rule | `src/api/mock/rules.ts` |
-| Find which screen uses an endpoint | table below |
-| Add or change an endpoint | "Changing the API contract" in [CONTRIBUTING.md](../CONTRIBUTING.md) |
+
+| You want to...                           | Look at                                                              |
+| ---------------------------------------- | -------------------------------------------------------------------- |
+| See what the UI expects from an endpoint | `src/api/types.ts`, `src/api/schemas.ts`                             |
+| See how an endpoint is called            | `src/api/live.ts`                                                    |
+| See how the mock enforces a rule         | `src/api/mock/rules.ts`                                              |
+| Find which screen uses an endpoint       | table below                                                          |
+| Add or change an endpoint                | "Changing the API contract" in [CONTRIBUTING.md](../CONTRIBUTING.md) |
 
 ## 3. Endpoint to screen map
-| Endpoint | Hook | Screen |
-|---|---|---|
-| `GET /traders` | `useTraders` | Trader selector |
-| `GET /traders/{id}/forecast` | `useForecast` | Dashboard, Forecast |
-| `GET /traders/{id}/limit` | `useLimit` | Dashboard, My Limit, Offers |
-| `POST /traders/{id}/offer` | `useCreateOffer` | Offers form |
-| `POST /offers/{id}/accept` / `decline` | `useAcceptOffer` / `useDeclineOffer` | Offer review |
-| `GET /traders/{id}/repayments` | `useRepayments` | Dashboard, Repayments |
-| `POST /loans/{id}/repay` | `useRepay` | Demo controls |
-| `POST /traders/{id}/stock-checkin` | `useStockCheckin` | Stock panel |
-| `POST/GET /traders/{id}/disputes` | `useCreateDispute` / `useDisputes` | Report a problem |
-| `GET /traders/{id}/insights` | `useInsights` | Forecast, Dashboard |
-| `GET /backtest/summary` | `useBacktest` | Backtest |
-| `GET /traders/{id}/offers` | `useOffers` | Offer history |
-| `POST /ussd` (form-encoded) | `useUssd` | USSD simulator |
-| `POST /demo/reset` | `useDemoReset` | Demo toolbar |
-| `GET /health` | `useHealth` | Status indicator |
+
+| Endpoint                               | Hook                                 | Screen                      |
+| -------------------------------------- | ------------------------------------ | --------------------------- |
+| `GET /traders`                         | `useTraders`                         | Trader selector             |
+| `GET /traders/{id}/forecast`           | `useForecast`                        | Dashboard, Forecast         |
+| `GET /traders/{id}/limit`              | `useLimit`                           | Dashboard, My Limit, Offers |
+| `POST /traders/{id}/offer`             | `useCreateOffer`                     | Offers form                 |
+| `POST /offers/{id}/accept` / `decline` | `useAcceptOffer` / `useDeclineOffer` | Offer review                |
+| `GET /traders/{id}/repayments`         | `useRepayments`                      | Dashboard, Repayments       |
+| `POST /loans/{id}/repay`               | `useRepay`                           | Demo controls               |
+| `POST /traders/{id}/stock-checkin`     | `useStockCheckin`                    | Stock panel                 |
+| `POST/GET /traders/{id}/disputes`      | `useCreateDispute` / `useDisputes`   | Report a problem            |
+| `GET /traders/{id}/insights`           | `useInsights`                        | Forecast, Dashboard         |
+| `GET /backtest/summary`                | `useBacktest`                        | Backtest                    |
+| `GET /traders/{id}/offers`             | `useOffers`                          | Offer history               |
+| `POST /ussd` (form-encoded)            | `useUssd`                            | USSD simulator              |
+| `POST /demo/reset`                     | `useDemoReset`                       | Demo toolbar                |
+| `GET /health`                          | `useHealth`                          | Status indicator            |
 
 ## 4. Behaviour the backend must keep
+
 These are the things the UI depends on. Changing them breaks screens.
+
 - **Field names and types** exactly as in the SRS. Money is an integer KES; dates are ISO strings; UTC timestamps.
 - **Error body** is always `{ "detail": string }` with 400/404/409/422/5xx as in the SRS table.
 - **409** on a second offer/accept while a loan is active, and on accepting or declining an offer twice. `detail` is shown to the user verbatim, so keep it plain language.
@@ -52,12 +57,14 @@ These are the things the UI depends on. Changing them breaks screens.
 - **CORS** allows the dashboard origin.
 
 ## 5. Handling a mismatch
+
 1. The dev console warns `[contract] <METHOD> <path>: <zod issue>` and the UI shows an error state.
 2. Capture the real response (copy as cURL from DevTools).
 3. Post it in the team channel with the endpoint name, per the SRS working agreement.
 4. Agree which side changes; update `docs/API_CONTRACT.md` and the schemas/mock in the same PR.
 
 ## 6. Demo checklist (live mode)
+
 - [ ] `/health` is green
 - [ ] `POST /demo/reset` clears state (or returns 403, handled)
 - [ ] Select each trader 101, 102, 103; limits load
