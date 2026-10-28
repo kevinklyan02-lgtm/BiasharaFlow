@@ -40,6 +40,4 @@ export const SEED_TRADERS: SeedTrader[] = [
 /** Index = UTC weekday (0 = Sunday). Factors sum to 7 so a week averages to the base. */
 export const WEEKDAY_FACTORS = [1.05, 0.85, 0.9, 0.95, 1.0, 1.15, 1.1];
 
-export const STOCK_ITEMS = ['Cooking oil', 'Sugar', 'Maize flour', 'Rice', 'Milk', 'Bread'];
-
-export const DISPUTE_REASONS = ['Wrong balance', 'Double deduction', 'Other'];
+export { DISPUTE_REASONS, STOCK_ITEMS } from '@/lib/catalog';
