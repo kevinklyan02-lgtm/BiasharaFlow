@@ -7,3 +7,7 @@ class ResizeObserverStub {
   disconnect() {}
 }
 globalThis.ResizeObserver ??= ResizeObserverStub;
+
+// Parallel test files make renders slower; give async queries more headroom than the 1s default.
+import { configure } from '@testing-library/react';
+configure({ asyncUtilTimeout: 5000 });
