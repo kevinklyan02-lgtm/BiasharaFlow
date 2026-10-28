@@ -1,11 +1,23 @@
+import { useState } from 'react';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter } from 'react-router-dom';
+import { ApiProvider } from '@/api/ApiProvider';
+import { api } from '@/api/client';
+import { createQueryClient } from '@/api/queryClient';
+import { TraderProvider } from '@/features/traders/TraderContext';
+import { AppRoutes } from './routes';
+
 export function App() {
+  const [queryClient] = useState(createQueryClient);
   return (
-    <main className="flex min-h-screen items-center justify-center p-6">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-brand-800">BiasharaFlow</h1>
-        <p className="mt-2 text-slate-600">Restock. Grow. Thrive.</p>
-        <p className="mt-4 text-sm text-slate-500">Simulated data only. Foundation ready.</p>
-      </div>
-    </main>
+    <ApiProvider client={api}>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <TraderProvider>
+            <AppRoutes />
+          </TraderProvider>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </ApiProvider>
   );
 }
