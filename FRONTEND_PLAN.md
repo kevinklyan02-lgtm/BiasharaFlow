@@ -19,17 +19,17 @@ Dark-green sidebar (Dashboard, Forecast Chart, My Limit, Offers, Repayment Progr
 
 Dashboard home cards, mapped to endpoints:
 
-| Mockup element | Data source |
-|---|---|
-| Today's M-PESA Sales | latest `ledger[].daily_sales` from `/repayments`; falls back to today's `forecast` expected value |
-| 7-Day Forecast (avg.) | average of first 7 `expected_sales` from `/forecast` (or `expected_sales_7d` from `/insights`) |
-| Your Weekly Limit | `weekly_limit` from `/limit` |
-| 14-Day Sales Forecast | `/forecast`: expected line + low/high band (always show the band) |
-| Weekly Limit + "Why this limit?" | `reason`, `low_case_sales_7d`, `obligations_7d` from `/limit` |
-| Ready for a restock loan? CTA | links to Offers; hidden if `weekly_limit` is 0 or there is an active loan |
-| Repayment Progress ring | active loan `repaid / total_payable`; "next repayment: 12% of daily sales" from `repay_share` |
-| Report a Problem | opens the dispute form |
-| Recent Activity | derived by merging `/offers`, `/repayments` ledger, and local stock check-ins, sorted by time |
+| Mockup element                   | Data source                                                                                       |
+| -------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Today's M-PESA Sales             | latest `ledger[].daily_sales` from `/repayments`; falls back to today's `forecast` expected value |
+| 7-Day Forecast (avg.)            | average of first 7 `expected_sales` from `/forecast` (or `expected_sales_7d` from `/insights`)    |
+| Your Weekly Limit                | `weekly_limit` from `/limit`                                                                      |
+| 14-Day Sales Forecast            | `/forecast`: expected line + low/high band (always show the band)                                 |
+| Weekly Limit + "Why this limit?" | `reason`, `low_case_sales_7d`, `obligations_7d` from `/limit`                                     |
+| Ready for a restock loan? CTA    | links to Offers; hidden if `weekly_limit` is 0 or there is an active loan                         |
+| Repayment Progress ring          | active loan `repaid / total_payable`; "next repayment: 12% of daily sales" from `repay_share`     |
+| Report a Problem                 | opens the dispute form                                                                            |
+| Recent Activity                  | derived by merging `/offers`, `/repayments` ledger, and local stock check-ins, sorted by time     |
 
 Mockup deviations to fix: it says "KES 21,000" and "3 weeks", so read everything from the API (SRS v0.2 point 1). Welcome heading uses the selected trader's `shop_name`. The mockup's "John Doe" user chip becomes the trader selector. Mockup dates say 2025, so use API dates.
 

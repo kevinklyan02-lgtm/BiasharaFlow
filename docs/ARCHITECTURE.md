@@ -1,11 +1,13 @@
 # Architecture
 
 ## Goals
+
 - Build only from the SRS contract; keep the backend swappable with zero UI change.
 - Keep server data, UI state and presentation clearly separated.
 - Make every business rule testable without a browser or network.
 
 ## Stack
+
 Vite, React 18, TypeScript (strict), React Router, TanStack Query, Recharts, Tailwind CSS, Vitest + React Testing Library, ESLint + Prettier, Zod (runtime response validation).
 
 ## Layers
@@ -47,6 +49,7 @@ docs/             ROADMAP, ARCHITECTURE, INTEGRATION, API_CONTRACT, DECISIONS
 ```
 
 ## Key decisions
+
 1. **Mock adapter implements the same interface as live.** Contract tests run against both so the mock can't drift from the SRS.
 2. **Server state in TanStack Query only.** No copying API data into global stores. UI state (selected trader, mobile drawer) lives in a small React context persisted to `localStorage`.
 3. **Query keys are namespaced by trader**, e.g. `['trader', id, 'limit']`. Accept/repay/reset invalidate the affected keys: `limit`, `repayments`, `offers`.
@@ -57,13 +60,15 @@ docs/             ROADMAP, ARCHITECTURE, INTEGRATION, API_CONTRACT, DECISIONS
 8. **No secrets in the frontend.** Only `VITE_*` public config; `.env` is git-ignored, `.env.example` is committed.
 
 ## Configuration
-| Variable | Values | Default |
-|---|---|---|
-| `VITE_API_MODE` | `mock` or `live` | `mock` |
-| `VITE_API_BASE_URL` | backend base URL | `http://localhost:8000` |
-| `VITE_DEMO_MODE` | `true` shows reset/demo controls | `true` |
+
+| Variable            | Values                           | Default                 |
+| ------------------- | -------------------------------- | ----------------------- |
+| `VITE_API_MODE`     | `mock` or `live`                 | `mock`                  |
+| `VITE_API_BASE_URL` | backend base URL                 | `http://localhost:8000` |
+| `VITE_DEMO_MODE`    | `true` shows reset/demo controls | `true`                  |
 
 ## Testing strategy
+
 - **Unit:** mock rules, formatters, ID generation.
 - **Contract:** a shared suite that runs against the mock (always) and the live API (opt-in with `npm run test:contract:live`).
 - **Component:** key screens with the mock adapter.
