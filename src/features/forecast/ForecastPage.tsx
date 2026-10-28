@@ -1,4 +1,5 @@
 import { PageHeader } from '@/components/ui';
+import { StockCheckinPanel } from '@/features/stock/StockCheckinPanel';
 import { ForecastCard } from './ForecastCard';
 import { InsightsPanel } from './InsightsPanel';
 
@@ -11,7 +12,10 @@ export function ForecastPage() {
       />
       <div className="space-y-5">
         <ForecastCard />
-        <InsightsPanel />
+        <div className="grid gap-5 lg:grid-cols-2">
+          <InsightsPanel />
+          <StockCheckinPanel />
+        </div>
       </div>
     </>
   );

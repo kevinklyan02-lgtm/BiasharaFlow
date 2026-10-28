@@ -4,6 +4,7 @@ import { Card } from '@/components/ui';
 import { ForecastCard } from '@/features/forecast/ForecastCard';
 import { LimitCard } from '@/features/limit/LimitCard';
 import { RepaymentSummaryCard } from '@/features/repayments/RepaymentSummaryCard';
+import { StockCheckinPanel } from '@/features/stock/StockCheckinPanel';
 import { RecentActivity } from './RecentActivity';
 import { RestockCta } from './RestockCta';
 import { StatCards } from './StatCards';
@@ -66,6 +67,7 @@ export function DashboardPage() {
       <div className="space-y-5">
         <RestockCta />
         <RepaymentSummaryCard />
+        <StockCheckinPanel />
         <ReportProblemCard />
       </div>
     </div>
